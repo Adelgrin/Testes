@@ -24,7 +24,7 @@ const Instrument = ({ children, showBox = true, size = 250 }) => {
       ]}
     >
       {showBox && (
-        <Image source={require('./img/fi_box.svg')} style={boxStyle} resizeMode="contain" />
+        <Image source={require('./img/fi_box.png')} style={boxStyle} resizeMode="contain" />
       )}
       {children}
     </View>
@@ -34,11 +34,11 @@ const Instrument = ({ children, showBox = true, size = 250 }) => {
 export const HeadingIndicator = ({ heading = 0, ...params }) => (
   <Instrument {...params}>
     <View style={[boxStyle, { transform: [{ rotate: `${-heading}deg` }] }]}>
-      <Image source={require('./img/heading_yaw.svg')} style={boxStyle} resizeMode="contain" />
+      <Image source={require('./img/heading_yaw.png')} style={boxStyle} resizeMode="contain" />
     </View>
     <View style={boxStyle}>
-      <Image source={require('./img/heading_mechanics.svg')} style={boxStyle} resizeMode="contain" />
-      <Image source={require('./img/fi_circle.svg')} style={boxStyle} resizeMode="contain" />
+      <Image source={require('./img/heading_mechanics.png')} style={boxStyle} resizeMode="contain" />
+      <Image source={require('./img/fi_circle.png')} style={boxStyle} resizeMode="contain" />
     </View>
   </Instrument>
 );
@@ -63,12 +63,12 @@ export const Variometer = ({ vario = 0, ...params }) => {
 
 export const TurnCoordinator = ({ turn = 0, ...params }) => (
   <Instrument {...params}>
-    <Image source={require('./img/turn_coordinator.svg')} style={boxStyle} resizeMode="contain" />
+    <Image source={require('./img/turn_coordinator.png')} style={boxStyle} resizeMode="contain" />
     <View style={[boxStyle, { transform: [{ rotate: `${turn}deg` }] }]}>
-      <Image source={require('./img/fi_tc_airplane.svg')} style={boxStyle} resizeMode="contain" />
+      <Image source={require('./img/fi_tc_airplane.png')} style={boxStyle} resizeMode="contain" />
     </View>
     <View style={boxStyle}>
-      <Image source={require('./img/fi_circle.svg')} style={boxStyle} resizeMode="contain" />
+      <Image source={require('./img/fi_circle.png')} style={boxStyle} resizeMode="contain" />
     </View>
   </Instrument>
 );
@@ -82,12 +82,12 @@ export const Airspeed = ({ speed = 0, ...params }) => {
 
   return (
     <Instrument {...params}>
-      <Image source={require('./img/speed_mechanics.svg')} style={boxStyle} resizeMode="contain" />
+      <Image source={require('./img/speed_mechanics.png')} style={boxStyle} resizeMode="contain" />
       <View style={[boxStyle, { transform: [{ rotate: `${rotation}deg` }] }]}>
-        <Image source={require('./img/fi_needle.svg')} style={boxStyle} resizeMode="contain" />
+        <Image source={require('./img/fi_needle.png')} style={boxStyle} resizeMode="contain" />
       </View>
       <View style={boxStyle}>
-        <Image source={require('./img/fi_circle.svg')} style={boxStyle} resizeMode="contain" />
+        <Image source={require('./img/fi_circle.png')} style={boxStyle} resizeMode="contain" />
       </View>
     </Instrument>
   );
@@ -101,17 +101,17 @@ export const Altimeter = ({ altitude = 0, pressure = 1013.25, ...params }) => {
   return (
     <Instrument {...params}>
       <View style={[boxStyle, { transform: [{ rotate: `${adjustedPressure}deg` }] }]}>
-        <Image source={require('./img/altitude_pressure.svg')} style={boxStyle} resizeMode="contain" />
+        <Image source={require('./img/altitude_pressure.png')} style={boxStyle} resizeMode="contain" />
       </View>
-      <Image source={require('./img/altitude_ticks.svg')} style={boxStyle} resizeMode="contain" />
+      <Image source={require('./img/altitude_ticks.png')} style={boxStyle} resizeMode="contain" />
       <View style={[boxStyle, { transform: [{ rotate: `${needleSmall}deg` }] }]}>
-        <Image source={require('./img/fi_needle_small.svg')} style={boxStyle} resizeMode="contain" />
+        <Image source={require('./img/fi_needle_small.png')} style={boxStyle} resizeMode="contain" />
       </View>
       <View style={[boxStyle, { transform: [{ rotate: `${needle}deg` }] }]}>
-        <Image source={require('./img/fi_needle.svg')} style={boxStyle} resizeMode="contain" />
+        <Image source={require('./img/fi_needle.png')} style={boxStyle} resizeMode="contain" />
       </View>
       <View style={boxStyle}>
-        <Image source={require('./img/fi_circle.svg')} style={boxStyle} resizeMode="contain" />
+        <Image source={require('./img/fi_circle.png')} style={boxStyle} resizeMode="contain" />
       </View>
     </Instrument>
   );
@@ -123,7 +123,7 @@ export const AttitudeIndicator = ({ pitch = 0, roll = 0, ...params }) => {
   return (
     <Instrument {...params}>
       <View style={[boxStyle, { transform: [{ rotate: `${roll}deg` }] }]}>
-        <Image source={require('./img/horizon_back.svg')} style={boxStyle} resizeMode="contain" />
+        <Image source={require('./img/horizon_back.png')} style={boxStyle} resizeMode="contain" />
         <View
           style={[
             boxStyle,
@@ -132,13 +132,13 @@ export const AttitudeIndicator = ({ pitch = 0, roll = 0, ...params }) => {
             },
           ]}
         >
-          <Image source={require('./img/horizon_ball.svg')} style={boxStyle} resizeMode="contain" />
+          <Image source={require('./img/horizon_ball.png')} style={boxStyle} resizeMode="contain" />
         </View>
-        <Image source={require('./img/horizon_circle.svg')} style={boxStyle} resizeMode="contain" />
+        <Image source={require('./img/horizon_circle.png')} style={boxStyle} resizeMode="contain" />
       </View>
       <View style={boxStyle}>
-        <Image source={require('./img/horizon_mechanics.svg')} style={boxStyle} resizeMode="contain" />
-        <Image source={require('./img/fi_circle.svg')} style={boxStyle} resizeMode="contain" />
+        <Image source={require('./img/horizon_mechanics.png')} style={boxStyle} resizeMode="contain" />
+        <Image source={require('./img/fi_circle.png')} style={boxStyle} resizeMode="contain" />
       </View>
     </Instrument>
   );
