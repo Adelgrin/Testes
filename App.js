@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Accelerometer, Barometer } from 'expo-sensors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Variometer} from './flightIndicators/src/index.js'
+import {Variometer, AttitudeIndicator} from './flightIndicators/src/index.js'
 
 
 // Importando as imagens dos ícones
@@ -114,6 +114,9 @@ function ParagliderScreen() {
       <Text style={styles.data}>
         Velocidade Vertical: {verticalSpeed} {unidadeVelocidade}
       </Text>
+      <Text style={styles.data}>
+        Altitude: {altitude} {unidadeAltitude}
+      </Text>
     </View>
   );
 }
@@ -154,22 +157,10 @@ function PlanadorScreen() {
     <View style={styles.container}>
       <Text style={styles.label}>Horizonte Artificial</Text>
       <View style={styles.horizonContainer}>
-        <Animated.View
-          style={[styles.horizonLine, {
-            transform: [
-              {
-                rotate: roll.interpolate({
-                  inputRange: [-90, 90],
-                  outputRange: ['-90deg', '90deg'],
-                }),
-              },
-              { translateY: pitch },
-            ],
-          }]}
-        />
-      </View>
+        <AttitudeIndicator roll={roll} pitch={pitch} showBox={false} />
       <Text style={styles.data}>Roll: {currentRoll}°</Text>
       <Text style={styles.data}>Pitch: {currentPitch}°</Text>
+      </View>
     </View>
   );
 }
