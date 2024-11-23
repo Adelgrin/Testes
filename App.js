@@ -1,11 +1,18 @@
 import React, { useState, useEffect, useContext, createContext } from 'react';
-import { View, Text, StyleSheet, FlatList, Button, Animated, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Button,
+  Animated,
+  Image,
+} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Accelerometer, Barometer } from 'expo-sensors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Variometer, AttitudeIndicator} from './flightIndicators/src/index.js'
-
+import { Variometer, AttitudeIndicator } from './flightIndicators/src/index.js';
 
 // Importando as imagens dos ícones
 import IconEngrenagem from './assets/icons/engrenagem.png';
@@ -16,21 +23,26 @@ import IconFile from './assets/icons/file.png';
 const VelocityContext = createContext();
 const Tab = createBottomTabNavigator();
 
-
-
-
-
 // Tela Configurações
 function ConfiguracoesScreen() {
-  const { unidadeVelocidade, unidadeAltitude, setUnidadeVelocidade, setUnidadeAltitude } = useContext(VelocityContext);
+  const {
+    unidadeVelocidade,
+    unidadeAltitude,
+    setUnidadeVelocidade,
+    setUnidadeAltitude,
+  } = useContext(VelocityContext);
 
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Configurações</Text>
-      <Text style={styles.data}>Unidade de Velocidade: {unidadeVelocidade}</Text>
+      <Text style={styles.data}>
+        Unidade de Velocidade: {unidadeVelocidade}
+      </Text>
       <Button
         title={`Alterar para ${unidadeVelocidade === 'm/s' ? 'ft/s' : 'm/s'}`}
-        onPress={() => setUnidadeVelocidade(unidadeVelocidade === 'm/s' ? 'ft/s' : 'm/s')}
+        onPress={() =>
+          setUnidadeVelocidade(unidadeVelocidade === 'm/s' ? 'ft/s' : 'm/s')
+        }
       />
       <Text style={styles.data}>Unidade de Altitude: {unidadeAltitude}</Text>
       <Button
@@ -71,14 +83,16 @@ function ParagliderScreen() {
   }
 
   function convertAltitude(altitudeInMeters) {
-    return unidadeAltitude === 'ft' ? altitudeInMeters * 3.28084 : altitudeInMeters;
+    return unidadeAltitude === 'ft'
+      ? altitudeInMeters * 3.28084
+      : altitudeInMeters;
   }
 
   useEffect(() => {
     //Accelerometer.setUpdateInterval(100);
     Barometer.setUpdateInterval(500);
 
-    const accSubscription = Barometer.addListener(({pressure}) => {
+    const accSubscription = Barometer.addListener(({ pressure }) => {
       const currentTime = Date.now();
       const timeDiff = (currentTime - deltaTime) / 1000;
       setDeltaTime(currentTime);
@@ -86,7 +100,8 @@ function ParagliderScreen() {
       if (lastZ !== null) {
         const deltaZ = calculateAltitude(pressure) - lastZ;
         const speedInMs = deltaZ / timeDiff;
-        const speedConverted = unidadeVelocidade === 'ft/s' ? speedInMs * 3.28084 : speedInMs;
+        const speedConverted =
+          unidadeVelocidade === 'ft/s' ? speedInMs * 3.28084 : speedInMs;
         setVerticalSpeed(speedConverted.toFixed(2));
       }
       setLastZ(calculateAltitude(pressure));
@@ -110,7 +125,7 @@ function ParagliderScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Paraglider</Text>
-      <Variometer vario={verticalSpeed} showBox={true} />
+      <Variometer vario={verticalSpeed} showBox={false} />
       <Text style={styles.data}>
         Velocidade Vertical: {verticalSpeed} {unidadeVelocidade}
       </Text>
@@ -131,23 +146,14 @@ function PlanadorScreen() {
   useEffect(() => {
     Accelerometer.setUpdateInterval(100);
     const subscription = Accelerometer.addListener(({ x, y, z }) => {
-      const calculatedPitch = Math.atan2(y, z) * (180 / Math.PI);
-      const calculatedRoll = Math.atan2(x, Math.sqrt(y * y + z * z)) * (180 / Math.PI);
+      const calculatedPitch = (Math.atan2(y, z) * (180 / Math.PI)-90);
+      const calculatedRoll =
+        Math.atan2(x, Math.sqrt(y * y + z * z)) * (180 / Math.PI);
 
       setCurrentPitch(calculatedPitch.toFixed(2));
       setCurrentRoll(calculatedRoll.toFixed(2));
 
-      Animated.timing(roll, {
-        toValue: calculatedRoll,
-        duration: 100,
-        useNativeDriver: true,
-      }).start();
-
-      Animated.timing(pitch, {
-        toValue: calculatedPitch,
-        duration: 100,
-        useNativeDriver: true,
-      }).start();
+      
     });
 
     return () => subscription && subscription.remove();
@@ -157,10 +163,11 @@ function PlanadorScreen() {
     <View style={styles.container}>
       <Text style={styles.label}>Horizonte Artificial</Text>
       <View style={styles.horizonContainer}>
-        <AttitudeIndicator roll={roll} pitch={pitch} showBox={false} />
-      <Text style={styles.data}>Roll: {currentRoll}°</Text>
-      <Text style={styles.data}>Pitch: {currentPitch}°</Text>
+        <AttitudeIndicator roll={currentRoll} pitch={currentPitch} showBox={false} />
+        
       </View>
+      <Text style={styles.data}>Roll: {currentRoll}°</Text>
+        <Text style={styles.data}>Pitch: {currentPitch}°</Text>
     </View>
   );
 }
@@ -199,8 +206,18 @@ function LogsScreen() {
           renderItem={({ item }) => (
             <View style={styles.logItem}>
               <Text>Timestamp: {formatDate(item.timestamp)}</Text>
-              <Text>Velocidade: {item.speed} {typeof item.speed === 'string' && item.speed.includes('ft') ? 'ft/s' : 'm/s'}</Text>
-              <Text>Altitude: {item.alt} {typeof item.alt === 'string' && item.alt.includes('ft') ? 'ft' : 'm'}</Text>
+              <Text>
+                Velocidade: {item.speed}{' '}
+                {typeof item.speed === 'string' && item.speed.includes('ft')
+                  ? 'ft/s'
+                  : 'm/s'}
+              </Text>
+              <Text>
+                Altitude: {item.alt}{' '}
+                {typeof item.alt === 'string' && item.alt.includes('ft')
+                  ? 'ft'
+                  : 'm'}
+              </Text>
             </View>
           )}
         />
@@ -217,38 +234,48 @@ export default function App() {
   const [unidadeAltitude, setUnidadeAltitude] = useState('m');
 
   return (
-    <VelocityContext.Provider value={{ unidadeVelocidade, unidadeAltitude, setUnidadeVelocidade, setUnidadeAltitude }}>
+    <VelocityContext.Provider
+      value={{
+        unidadeVelocidade,
+        unidadeAltitude,
+        setUnidadeVelocidade,
+        setUnidadeAltitude,
+      }}>
       <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            // Seleciona o ícone com base no nome da rota
-            let iconName;
+        <Tab.Navigator
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, color, size }) => {
+              // Seleciona o ícone com base no nome da rota
+              let iconName;
 
-            if (route.name === 'Configurações') {
-              iconName = IconEngrenagem;
-            } else if (route.name === 'Paraglider') {
-              iconName = IconParaglider;
-            } else if (route.name === 'Logs') {
-              iconName = IconFile;
-            } else if (route.name === 'Planador') {
-              iconName = IconPlanador;
-            }
+              if (route.name === 'Configurações') {
+                iconName = IconEngrenagem;
+              } else if (route.name === 'Paraglider') {
+                iconName = IconParaglider;
+              } else if (route.name === 'Logs') {
+                iconName = IconFile;
+              } else if (route.name === 'Planador') {
+                iconName = IconPlanador;
+              }
 
-            // Retorna a imagem como ícone
-            return <Image source={iconName} style={{ width: size, height: size, tintColor: color }} />;
-          },
-          tabBarActiveTintColor: 'blue',    // Cor do ícone ativo
-          tabBarInactiveTintColor: 'gray',  // Cor do ícone inativo
-        })}
-      >
-        
-        <Tab.Screen name="Paraglider" component={ParagliderScreen} />
-        <Tab.Screen name="Planador" component={PlanadorScreen} />
-        <Tab.Screen name="Logs" component={LogsScreen} />
-        <Tab.Screen name="Configurações" component={ConfiguracoesScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
+              // Retorna a imagem como ícone
+              return (
+                <Image
+                  source={iconName}
+                  style={{ width: size, height: size, tintColor: color }}
+                />
+              );
+            },
+            tabBarActiveTintColor: 'blue', // Cor do ícone ativo
+            tabBarInactiveTintColor: 'gray', // Cor do ícone inativo
+          })}>
+          
+          <Tab.Screen name="Paraglider" component={ParagliderScreen} />
+          <Tab.Screen name="Planador" component={PlanadorScreen} />
+          <Tab.Screen name="Logs" component={LogsScreen} />
+          <Tab.Screen name="Configurações" component={ConfiguracoesScreen} />
+        </Tab.Navigator>
+      </NavigationContainer>
     </VelocityContext.Provider>
   );
 }

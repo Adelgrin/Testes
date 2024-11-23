@@ -12,7 +12,7 @@ const boxStyle = {
   ...StyleSheet.absoluteFillObject,
 };
 
-const Instrument = ({ children, showBox = true, size = 250 }) => {
+const Instrument = ({ children, showBox = true, size = 200 }) => {
   return (
     <View
       style={[
@@ -44,8 +44,8 @@ export const HeadingIndicator = ({ heading = 0, ...params }) => (
 );
 
 export const Variometer = ({ vario = 0, ...params }) => {
-  let adjustedVario = vario / 1000;
-  adjustedVario = Math.min(Math.max(adjustedVario, -constants.vario_bound), constants.vario_bound);
+  let adjustedVario = vario / 1;
+  //adjustedVario = Math.min(Math.max(adjustedVario, -constants.vario_bound), constants.vario_bound);
   adjustedVario *= 90;
 
   return (
